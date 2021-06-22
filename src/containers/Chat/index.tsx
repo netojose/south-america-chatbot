@@ -1,20 +1,36 @@
+/* eslint no-console: "off" */
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 
-const Chat = (): React.ReactElement => (
-  <div>
-    <h1>Luke Chat</h1>
+import { RootState } from '../../redux/store';
 
-    <dl>
-      <dt>Can I order some pizza</dt>
-      <dd>Sure what kind of pizza do you want?</dd>
+const Chat = (): React.ReactElement => {
+  const { userID } = useParams<{ userID: string }>();
+  const user = useSelector(({ users }: RootState) => users.items[userID]);
+  return !user ? (
+    <div>
+      <p>User not found</p>
+      <p>
+        <Link to="/dashboard">Go to dashboard</Link>
+      </p>
+    </div>
+  ) : (
+    <div>
+      <h1>{user.name} Chat</h1>
 
-      <dt>Pepperoni and Cheese</dt>
-      <dd>Great, pepperoni and cheese coming up!</dd>
-    </dl>
+      <dl>
+        <dt>Can I order some pizza</dt>
+        <dd>Sure what kind of pizza do you want?</dd>
 
-    <input placeholder="user input here" />
-    <button>send</button>
-  </div>
-);
+        <dt>Pepperoni and Cheese</dt>
+        <dd>Great, pepperoni and cheese coming up!</dd>
+      </dl>
+
+      <input placeholder="user input here" />
+      <button>send</button>
+    </div>
+  );
+};
 
 export default Chat;
