@@ -1,16 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import UsersSlice from '../../interfaces/UsersSlice';
 
-const initialState = {
-  items: [],
-  isLoading: false,
-} as UsersSlice;
+const initialState: UsersSlice = {
+  items: {},
+};
 
-export const messagesSlice = createSlice({
+export const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    add: (state, action: PayloadAction<{ slug: string; name: string }>) => {
+      const { slug, name } = action.payload;
+      state.items[slug] = { name };
+    },
+  },
 });
 
-export default messagesSlice.reducer;
+export const { add } = usersSlice.actions;
+export default usersSlice.reducer;

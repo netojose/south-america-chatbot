@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Chat: React.FC = () => (
+const Chat = (): React.ReactElement => (
   <div>
     <h1>Luke Chat</h1>
 

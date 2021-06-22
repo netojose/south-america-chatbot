@@ -6,5 +6,11 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       extends: ['@voiceflow/eslint-config/typescript'],
     },
+    {
+      files: ['./src/redux/slices/*'],
+      rules: {
+        'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
+      },
+    },
   ],
 };
