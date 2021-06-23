@@ -1,6 +1,7 @@
+/* eslint no-console: "off" */
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, match } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import Form, { Button, Input } from '../../components/Form';
@@ -14,8 +15,13 @@ interface FormValues {
   message: string;
 }
 
-const Chat = (): React.ReactElement => {
-  const { userID } = useParams<{ userID: string }>();
+const Chat = ({
+  match: {
+    params: { userID },
+  },
+}: {
+  match: match<{ userID: string }>;
+}): React.ReactElement => {
   const user = useSelector(({ users }: RootState) => users.items[userID]);
 
   const handleSubmit = useCallback(({ message }: FormValues) => {
