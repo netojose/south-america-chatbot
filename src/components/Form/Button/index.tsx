@@ -6,7 +6,7 @@ const Button = ({
   onClick,
 }: {
   label: string;
-  type?: string;
+  type?: 'submit' | 'button' | 'reset';
   onClick?: (e: MouseEvent<HTMLInputElement>) => void;
 }): React.ReactElement => <input type={type} value={label} onClick={onClick} />;
 
