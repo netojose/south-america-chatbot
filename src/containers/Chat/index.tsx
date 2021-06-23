@@ -1,13 +1,26 @@
-/* eslint no-console: "off" */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import * as Yup from 'yup';
 
+import Form, { Button, Input } from '../../components/Form';
 import { RootState } from '../../redux/store';
+
+const validationRules = {
+  message: Yup.string().required(),
+};
+
+interface FormValues {
+  message: string;
+}
 
 const Chat = (): React.ReactElement => {
   const { userID } = useParams<{ userID: string }>();
   const user = useSelector(({ users }: RootState) => users.items[userID]);
+
+  const handleSubmit = useCallback(({ message }: FormValues) => {
+    message.toLocaleLowerCase();
+  }, []);
 
   return !user ? (
     <div>
@@ -28,8 +41,10 @@ const Chat = (): React.ReactElement => {
         <dd>Great, pepperoni and cheese coming up!</dd>
       </dl>
 
-      <input placeholder="user input here" />
-      <button>send</button>
+      <Form<FormValues> onSubmit={handleSubmit} rules={validationRules}>
+        <Input label="Message" name="message" placeholder="Type your message here" />
+        <Button label="Send message" />
+      </Form>
     </div>
   );
 };
