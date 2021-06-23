@@ -34,7 +34,6 @@ const ModalAddUser = function ({ isOpen, onRequestClose }: { isOpen: boolean; on
 
   return (
     <Modal title="Add a new user" isOpen={isOpen} onRequestClose={onRequestClose}>
-      <p>Loadable components and check router rendering approach</p>
       <Form<FormValues> onSubmit={handleSubmit} rules={validationRules}>
         <Input label="Name" name="name" />
         <Button label="Add user" />
