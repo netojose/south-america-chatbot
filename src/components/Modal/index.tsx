@@ -5,12 +5,16 @@ const Modal = function ({
   title,
   isOpen,
   children,
-  onRequestClose,
+  onRequestClose = () => null,
+  showCloseBtn = true,
+  closeOnEsc = true,
 }: {
   title: string;
   isOpen: boolean;
-  onRequestClose: () => void;
   children: React.ReactNode;
+  onRequestClose?: () => void;
+  showCloseBtn?: boolean;
+  closeOnEsc?: boolean;
 }): React.ReactElement {
   const domNodeRef = useRef<HTMLDivElement>(document.createElement('div'));
 
@@ -32,20 +36,20 @@ const Modal = function ({
   const removeKeyBoardListener = useCallback(() => document.removeEventListener('keydown', watchKeyboard), [watchKeyboard]);
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && closeOnEsc) {
       addKeyBoardListener();
     } else {
       removeKeyBoardListener();
     }
     return () => removeKeyBoardListener();
-  }, [isOpen, onRequestClose]);
+  }, [isOpen, closeOnEsc, onRequestClose]);
 
   return createPortal(
     isOpen ? (
       <>
         <div role="dialog">
           <h3>{title}</h3>
-          <button onClick={onRequestClose}>X</button>
+          {showCloseBtn && <button onClick={onRequestClose}>X</button>}
           {children}
         </div>
         <div

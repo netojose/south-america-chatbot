@@ -14,8 +14,11 @@ export const usersSlice = createSlice({
       const { slug, name } = action.payload;
       state.items[slug] = { name };
     },
+    remove: (state, action: PayloadAction<string>) => {
+      delete state.items[action.payload];
+    },
   },
 });
 
-export const { add } = usersSlice.actions;
+export const { add, remove } = usersSlice.actions;
 export default usersSlice.reducer;

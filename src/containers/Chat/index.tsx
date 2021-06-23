@@ -8,6 +8,7 @@ import { RootState } from '../../redux/store';
 const Chat = (): React.ReactElement => {
   const { userID } = useParams<{ userID: string }>();
   const user = useSelector(({ users }: RootState) => users.items[userID]);
+
   return !user ? (
     <div>
       <p>User not found</p>
