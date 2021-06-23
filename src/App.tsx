@@ -5,9 +5,6 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import PageLoader from './components/PageLoader';
 import store from './redux/store';
 
-// import Chat from './containers/Chat';
-// import Dashboard from './containers/Dashboard';
-
 const Chat = lazy(() => import('./containers/Chat'));
 const Dashboard = lazy(() => import('./containers/Dashboard'));
 
