@@ -47,7 +47,7 @@ const Chat = ({
 
       <ul>
         {messages.map((message) => (
-          <Message key={message.id} {...message} />
+          <Message key={message.id} {...message} userID={userID} />
         ))}
       </ul>
 

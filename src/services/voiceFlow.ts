@@ -2,8 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { GeneralTrace, RequestType, TextRequest } from '@voiceflow/general-types';
 import { nanoid } from 'nanoid';
 
-// import MessageChoice from '../interfaces/MessageChoice';
-// import MessageSpeak from '../interfaces/MessageSpeak';
 import Message from '../interfaces/Message';
 import { add } from '../redux/slices/messages';
 

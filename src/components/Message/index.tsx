@@ -5,10 +5,10 @@ import Choice from './Choice';
 import Speak from './Speak';
 import User from './User';
 
-const Message = (props: MessageType): React.ReactElement => {
+const Message = (props: MessageType & { userID: string }): React.ReactElement => {
   switch (props.type) {
     case 'choice':
-      return <Choice {...(props as MessageChoice)} />;
+      return <Choice {...(props as MessageChoice)} userID={props.userID} />;
     case 'speak':
       return <Speak {...(props as MessageSpeak)} />;
     default:
