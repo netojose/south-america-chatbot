@@ -3,7 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import UsersSlice from '../../interfaces/UsersSlice';
 
 const initialState: UsersSlice = {
-  items: {},
+  items: {
+    neto: { name: 'Neto' },
+  },
 };
 
 export const usersSlice = createSlice({

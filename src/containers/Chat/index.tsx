@@ -1,11 +1,12 @@
-/* eslint no-console: "off" */
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, match } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import Form, { Button, Input } from '../../components/Form';
+import Message from '../../components/Message';
 import { RootState } from '../../redux/store';
+import { useSendMessageMutation } from '../../services/voiceFlow';
 
 const validationRules = {
   message: Yup.string().required(),
@@ -23,10 +24,15 @@ const Chat = ({
   match: match<{ userID: string }>;
 }): React.ReactElement => {
   const user = useSelector(({ users }: RootState) => users.items[userID]);
+  const messages = useSelector(({ messages }: RootState) => messages.items[userID] ?? []);
+  const [sendMessage] = useSendMessageMutation();
 
-  const handleSubmit = useCallback(({ message }: FormValues) => {
-    message.toLocaleLowerCase();
-  }, []);
+  const handleSubmit = useCallback(
+    ({ message }: FormValues) => {
+      sendMessage({ message, userID });
+    },
+    [userID]
+  );
 
   return !user ? (
     <div>
@@ -39,13 +45,11 @@ const Chat = ({
     <div>
       <h1>{user.name} Chat</h1>
 
-      <dl>
-        <dt>Can I order some pizza</dt>
-        <dd>Sure what kind of pizza do you want?</dd>
-
-        <dt>Pepperoni and Cheese</dt>
-        <dd>Great, pepperoni and cheese coming up!</dd>
-      </dl>
+      <ul>
+        {messages.map((message) => (
+          <Message key={message.id} {...message} />
+        ))}
+      </ul>
 
       <Form<FormValues> onSubmit={handleSubmit} rules={validationRules}>
         <Input label="Message" name="message" placeholder="Type your message here" />
