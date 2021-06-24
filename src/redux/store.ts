@@ -11,6 +11,7 @@ import users from './slices/users';
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: [voiceFlow.reducerPath],
 };
 
 const rootReducer = combineReducers({
