@@ -1,43 +1,48 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import * as Yup from 'yup';
 
 import { add } from '../../redux/slices/users';
 import { RootState, useAppDispatch } from '../../redux/store';
 import makeSlug from '../../utils/makeSlug';
-import Form, { Button, Input } from '../Form';
+import Button from '../Form/Button';
+import Input from '../Form/Input';
 import Modal from '../Modal';
 
-interface FormValues {
+interface FormInputs {
   name: string;
 }
 
 const ModalAddUser = function ({ isOpen, onRequestClose }: { isOpen: boolean; onRequestClose: () => void }): React.ReactElement {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<FormInputs>();
   const idUsers = useSelector(({ users }: RootState) => Object.keys(users.items));
   const dispatch = useAppDispatch();
-  const handleSubmit = useCallback(
-    ({ name }: FormValues) => {
+  const onSubmit: SubmitHandler<FormInputs> = useCallback(
+    ({ name }) => {
       dispatch(add({ name, slug: makeSlug(name) }));
+      setValue('name', '');
       onRequestClose();
     },
     [onRequestClose]
   );
 
-  const validationRules = useMemo(
-    () => ({
-      name: Yup.string()
-        .required()
-        .test('available', 'This name is not available', (value) => !idUsers.includes(makeSlug(value || ''))),
-    }),
-    [idUsers]
-  );
+  const isValidId = useCallback((value) => !idUsers.includes(makeSlug(value || '')) || 'This name is not available', [idUsers]);
 
   return (
     <Modal title="Add a new user" isOpen={isOpen} onRequestClose={onRequestClose}>
-      <Form<FormValues> onSubmit={handleSubmit} rules={validationRules}>
-        <Input label="Name" name="name" />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input<FormInputs>
+          register={register('name', { required: 'The name is required', validate: isValidId })}
+          label="Name"
+          error={errors?.name?.message}
+        />
         <Button label="Add user" />
-      </Form>
+      </form>
     </Modal>
   );
 };

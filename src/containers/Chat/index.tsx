@@ -1,18 +1,15 @@
 import React, { useCallback } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Link, match } from 'react-router-dom';
-import * as Yup from 'yup';
 
-import Form, { Button, Input } from '../../components/Form';
+import Button from '../../components/Form/Button';
+import Input from '../../components/Form/Input';
 import Message from '../../components/Message';
 import { RootState } from '../../redux/store';
 import { useSendMessageMutation } from '../../services/voiceFlow';
 
-const validationRules = {
-  message: Yup.string().required(),
-};
-
-interface FormValues {
+interface FormInputs {
   message: string;
 }
 
@@ -23,13 +20,22 @@ const Chat = ({
 }: {
   match: match<{ userID: string }>;
 }): React.ReactElement => {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    clearErrors,
+    formState: { errors },
+  } = useForm<FormInputs>();
   const user = useSelector(({ users }: RootState) => users.items[userID]);
   const messages = useSelector(({ messages }: RootState) => messages.items[userID] ?? []);
   const [sendMessage] = useSendMessageMutation();
 
-  const handleSubmit = useCallback(
-    ({ message }: FormValues) => {
+  const onSubmit: SubmitHandler<FormInputs> = useCallback(
+    ({ message }) => {
       sendMessage({ message, userID });
+      setValue('message', '');
+      clearErrors();
     },
     [userID]
   );
@@ -51,10 +57,10 @@ const Chat = ({
         ))}
       </ul>
 
-      <Form<FormValues> onSubmit={handleSubmit} rules={validationRules}>
-        <Input label="Message" name="message" placeholder="Type your message here" />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input<FormInputs> label="Message" register={register('message', { required: 'The message is required' })} error={errors?.message?.message} />
         <Button label="Send message" />
-      </Form>
+      </form>
     </div>
   );
 };
