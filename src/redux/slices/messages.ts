@@ -1,11 +1,14 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import Message from '../../interfaces/Message';
 import MessagesSlice from '../../interfaces/MessagesSlice';
+import { remove } from './users';
 
 const initialState: MessagesSlice = {
   items: {},
 };
+
+const isRemoveUser = isAnyOf(remove);
 
 export const messagesSlice = createSlice({
   name: 'messages',
@@ -15,6 +18,11 @@ export const messagesSlice = createSlice({
       const { userID, message } = action.payload;
       state.items[userID] = [...(state.items[userID] ?? []), message];
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(isRemoveUser, (state, action) => {
+      delete state.items[action.payload];
+    });
   },
 });
 
