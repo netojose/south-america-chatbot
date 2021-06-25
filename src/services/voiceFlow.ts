@@ -1,9 +1,10 @@
+/* eslint no-console: "off" */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { GeneralTrace, RequestType, TextRequest } from '@voiceflow/general-types';
 import { nanoid } from 'nanoid';
 
 import Message from '../interfaces/Message';
-import { add as addMessage } from '../redux/slices/messages';
+import { add as addMessage, clearChat } from '../redux/slices/messages';
 
 const versionID = process.env.REACT_APP_VOICEFLOW_API_VERSION as string;
 const APIKey = process.env.REACT_APP_VOICEFLOW_API_KEY as string;
@@ -38,7 +39,8 @@ const voiceFlow = createApi({
       },
       async onCacheEntryAdded({ userID }, { cacheDataLoaded, dispatch }) {
         const response = await cacheDataLoaded;
-        const items = response.data.reduce<Array<Message>>((acc, curr) => {
+        const { data } = response;
+        const items = data.reduce<Array<Message>>((acc, curr) => {
           switch (curr.type) {
             case 'choice':
               return [...acc, { type: 'choice', id: nanoid(), buttons: curr.payload.buttons.map((button) => button.name) }];
@@ -49,8 +51,11 @@ const voiceFlow = createApi({
           }
         }, []);
 
-        // dispatch(addMessage({ userID, message: { id: nanoid(), type: 'user', text: userMessage } }));
         items.forEach((message) => dispatch(addMessage({ userID, message })));
+
+        if (data[data.length - 1].type === 'end') {
+          dispatch(clearChat(userID));
+        }
       },
     }),
   }),

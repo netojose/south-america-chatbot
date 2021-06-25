@@ -18,6 +18,9 @@ export const messagesSlice = createSlice({
       const { userID, message } = action.payload;
       state.items[userID] = [...(state.items[userID] ?? []), message];
     },
+    clearChat: (state, action: PayloadAction<string>) => {
+      state.items[action.payload] = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(isRemoveUser, (state, action) => {
@@ -26,5 +29,5 @@ export const messagesSlice = createSlice({
   },
 });
 
-export const { add } = messagesSlice.actions;
+export const { add, clearChat } = messagesSlice.actions;
 export default messagesSlice.reducer;
