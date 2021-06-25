@@ -53,6 +53,7 @@ const Chat = ({
       return;
     }
 
+    audioObj.current?.pause();
     audioObj.current = new Audio(message.audio);
     audioObj.current.addEventListener('ended', () => {
       dispatch(removeItem());
