@@ -12,5 +12,11 @@ module.exports = {
         'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }],
       },
     },
+    {
+      files: ['./webpack.config.js'],
+      rules: {
+        'xss/no-mixed-html': 'off',
+      },
+    },
   ],
 };
