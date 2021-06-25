@@ -33,7 +33,10 @@ const voiceFlow = createApi({
           body: { request, config: { tts: true } },
         };
       },
-      async onCacheEntryAdded({ userID, message: userMessage }, { cacheDataLoaded, dispatch }) {
+      async onQueryStarted(arg, { dispatch }) {
+        dispatch(addMessage({ userID: arg.userID, message: { id: nanoid(), type: 'user', text: arg.message } }));
+      },
+      async onCacheEntryAdded({ userID }, { cacheDataLoaded, dispatch }) {
         const response = await cacheDataLoaded;
         const items = response.data.reduce<Array<Message>>((acc, curr) => {
           switch (curr.type) {
@@ -46,7 +49,7 @@ const voiceFlow = createApi({
           }
         }, []);
 
-        dispatch(addMessage({ userID, message: { id: nanoid(), type: 'user', text: userMessage } }));
+        // dispatch(addMessage({ userID, message: { id: nanoid(), type: 'user', text: userMessage } }));
         items.forEach((message) => dispatch(addMessage({ userID, message })));
       },
     }),
