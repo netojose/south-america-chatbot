@@ -3,13 +3,14 @@ import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 import Audio from '../../interfaces/Audio';
 import AudiosSlice from '../../interfaces/AudiosSlice';
 import { MessageSpeak } from '../../interfaces/Message';
-import { add } from './messages';
+import { add, clearChat } from './messages';
 
 const initialState: AudiosSlice = {
   items: [],
 };
 
 const isMessageAdded = isAnyOf(add);
+const isChatCleared = isAnyOf(clearChat);
 
 export const audioQueueSlice = createSlice({
   name: 'audio',
@@ -30,6 +31,10 @@ export const audioQueueSlice = createSlice({
       if (message.type === 'speak' && (message as MessageSpeak).audio) {
         state.items.push(message.id);
       }
+    });
+
+    builder.addMatcher(isChatCleared, (state) => {
+      state.items = [];
     });
   },
 });
