@@ -26,10 +26,14 @@
     "listEmittedFiles": false,
     "listFiles": false,
     "pretty": true,
-    "lib": ["es2019", "dom", "es2020.string"],
+    "lib": [
+      "es2019",
+      "dom",
+      "es2020.string"
+    ],
     "outDir": "./build",
     "baseUrl": ".",
-    "types": ["node"],
+    "types": [],
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -37,6 +41,12 @@
     "noEmit": true
   },
   "compileOnSave": false,
-  "include": ["src/**/*", "test/**/*", "config/**/*"],
-  "exclude": ["node_modules/**"]
+  "include": [
+    "src/**/*",
+    "test/**/*",
+    "config/**/*"
+  ],
+  "exclude": [
+    "node_modules/**"
+  ]
 }

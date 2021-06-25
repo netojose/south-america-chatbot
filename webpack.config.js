@@ -3,10 +3,8 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
-const APP_PATH = path.resolve(__dirname, 'src');
-
 module.exports = {
-  entry: APP_PATH,
+  entry: path.resolve(__dirname, 'src'),
 
   output: {
     filename: '[contenthash].bundle.js',
@@ -32,7 +30,7 @@ module.exports = {
     new Dotenv({ systemvars: true }),
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.join(APP_PATH, 'index.html'),
+      template: path.join(__dirname, 'public', 'index.html'),
     }),
     new ForkTsCheckerWebpackPlugin(),
   ],
