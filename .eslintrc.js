@@ -18,5 +18,12 @@ module.exports = {
         'xss/no-mixed-html': 'off',
       },
     },
+    {
+      files: ['./craco.config.js', './postcss.config.js'],
+      rules: {
+        'import/no-extraneous-dependencies': 'off',
+        'global-require': 'off',
+      },
+    },
   ],
 };
