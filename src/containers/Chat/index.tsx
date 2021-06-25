@@ -29,6 +29,7 @@ const Chat = ({
     clearErrors,
     formState: { errors },
   } = useForm<FormInputs>();
+  const chatArea = useRef<HTMLUListElement>(null);
   const currentPlaying = useRef<string>();
   const audioObj = useRef<HTMLAudioElement>();
   const dispatch = useAppDispatch();
@@ -36,6 +37,16 @@ const Chat = ({
   const messages = useSelector(({ messages: { items } }: RootState) => items[userID] ?? []);
   const audioQueue = useSelector(({ audioQueue: { items } }: RootState) => items);
   const [sendMessage] = useSendMessageMutation();
+
+  useEffect(() => {
+    const { current: chatWrapper } = chatArea;
+    if (!chatWrapper) {
+      return;
+    }
+
+    chatWrapper.scrollTop = chatWrapper.scrollHeight;
+    chatWrapper.animate({ scrollTop: chatWrapper.scrollHeight });
+  }, [messages]);
 
   useEffect(() => {
     if (audioQueue.length < 1) {
@@ -93,7 +104,7 @@ const Chat = ({
     <div>
       <h1>{user.name} Chat</h1>
 
-      <ul>
+      <ul style={{ height: 350, overflowY: 'auto', scrollBehavior: 'smooth' }} ref={chatArea}>
         {messages.map((message) => (
           <Message key={message.id} {...message} userID={userID} />
         ))}
