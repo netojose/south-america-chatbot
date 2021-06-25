@@ -1,4 +1,3 @@
-/* eslint no-console: "off" */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { GeneralTrace, RequestType, TextRequest } from '@voiceflow/general-types';
 import { nanoid } from 'nanoid';

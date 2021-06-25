@@ -32,9 +32,9 @@ const Chat = ({
   const currentPlaying = useRef<string>();
   const audioObj = useRef<HTMLAudioElement>();
   const dispatch = useAppDispatch();
-  const user = useSelector(({ users }: RootState) => users.items[userID]);
-  const messages = useSelector(({ messages }: RootState) => messages.items[userID] ?? []);
-  const audioQueue = useSelector(({ audioQueue }: RootState) => audioQueue.items);
+  const user = useSelector(({ users: { items } }: RootState) => items[userID]);
+  const messages = useSelector(({ messages: { items } }: RootState) => items[userID] ?? []);
+  const audioQueue = useSelector(({ audioQueue: { items } }: RootState) => items);
   const [sendMessage] = useSendMessageMutation();
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import User from './User';
 const Message = (props: MessageType & { userID: string }): React.ReactElement => {
   switch (props.type) {
     case 'choice':
-      return <Choice {...(props as MessageChoice)} userID={props.userID} />;
+      return <Choice {...(props as MessageChoice)} userID={props.userID} id={props.id} />;
     case 'speak':
       return <Speak {...(props as MessageSpeak)} id={props.id} />;
     default:
