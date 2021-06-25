@@ -6,6 +6,7 @@ import { Link, match } from 'react-router-dom';
 import Button from '../../components/Form/Button';
 import Input from '../../components/Form/Input';
 import Message from '../../components/Message';
+import PageTitle from '../../components/PageTitle';
 import { MessageSpeak } from '../../interfaces/Message';
 import { clearQueue, removeItem } from '../../redux/slices/audioQueue';
 import { RootState, useAppDispatch } from '../../redux/store';
@@ -95,6 +96,7 @@ const Chat = ({
 
   return !user ? (
     <div>
+      <PageTitle title="User not found" />
       <p>User not found</p>
       <p>
         <Link to="/dashboard">Go to dashboard</Link>
@@ -102,6 +104,7 @@ const Chat = ({
     </div>
   ) : (
     <div>
+      <PageTitle title={`Chat with ${user.name}`} />
       <h1>{user.name} Chat</h1>
 
       <ul style={{ height: 350, overflowY: 'auto', scrollBehavior: 'smooth' }} ref={chatArea}>

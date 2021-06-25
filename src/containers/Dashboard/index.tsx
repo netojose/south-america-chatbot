@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Confirm from '../../components/Confirm';
 import ModalAddUser from '../../components/ModalAddUser';
+import PageTitle from '../../components/PageTitle';
 import { remove } from '../../redux/slices/users';
 import { RootState, useAppDispatch } from '../../redux/store';
 
@@ -34,7 +35,8 @@ const Dashboard = function (): React.ReactElement {
 
   return (
     <div>
-      <h1>Users</h1>
+      <PageTitle title="Chat users list" />
+      <h1>Chat users list</h1>
 
       {usersIdsList.length < 1 ? (
         <p>No users added</p>
