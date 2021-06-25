@@ -1,11 +1,15 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import Audio from '../../interfaces/Audio';
 import AudiosSlice from '../../interfaces/AudiosSlice';
+import { MessageSpeak } from '../../interfaces/Message';
+import { add } from './messages';
 
 const initialState: AudiosSlice = {
   items: [],
 };
+
+const isMessageAdded = isAnyOf(add);
 
 export const audioQueueSlice = createSlice({
   name: 'audio',
@@ -20,6 +24,13 @@ export const audioQueueSlice = createSlice({
     clearQueue: (state) => {
       state.items = [];
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(isMessageAdded, (state, { payload: { message } }) => {
+      if (message.type === 'speak' && (message as MessageSpeak).audio) {
+        state.items.push(message.id);
+      }
+    });
   },
 });
 

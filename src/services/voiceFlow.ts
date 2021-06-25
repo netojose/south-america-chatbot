@@ -3,7 +3,7 @@ import { GeneralTrace, RequestType, TextRequest } from '@voiceflow/general-types
 import { nanoid } from 'nanoid';
 
 import Message from '../interfaces/Message';
-import { add } from '../redux/slices/messages';
+import { add as addMessage } from '../redux/slices/messages';
 
 const versionID = process.env.REACT_APP_VOICEFLOW_API_VERSION as string;
 const APIKey = process.env.REACT_APP_VOICEFLOW_API_KEY as string;
@@ -46,9 +46,8 @@ const voiceFlow = createApi({
           }
         }, []);
 
-        dispatch(add({ userID, message: { id: nanoid(), type: 'user', text: userMessage } }));
-
-        items.forEach((message) => dispatch(add({ userID, message })));
+        dispatch(addMessage({ userID, message: { id: nanoid(), type: 'user', text: userMessage } }));
+        items.forEach((message) => dispatch(addMessage({ userID, message })));
       },
     }),
   }),

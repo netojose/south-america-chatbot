@@ -1,4 +1,3 @@
-/* eslint no-console: "off" */
 import React, { useCallback, useEffect, useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -40,18 +39,18 @@ const Chat = ({
 
   useEffect(() => {
     if (audioQueue.length < 1) {
-      return undefined;
+      return;
     }
 
     const [messageId] = audioQueue;
 
     if (messageId === currentPlaying.current) {
-      return undefined;
+      return;
     }
 
     const message = messages.find((message) => message.id === messageId) as MessageSpeak;
     if (!message.audio) {
-      return undefined;
+      return;
     }
 
     audioObj.current = new Audio(message.audio);
@@ -61,7 +60,9 @@ const Chat = ({
     });
     audioObj.current.play();
     currentPlaying.current = messageId;
+  }, [audioQueue, messages]);
 
+  useEffect(() => {
     return () => {
       if (currentPlaying.current && audioObj.current) {
         audioObj.current.pause();
@@ -69,7 +70,7 @@ const Chat = ({
         dispatch(clearQueue());
       }
     };
-  }, [audioQueue, messages]);
+  }, []);
 
   const onSubmit: SubmitHandler<FormInputs> = useCallback(
     ({ message }) => {
