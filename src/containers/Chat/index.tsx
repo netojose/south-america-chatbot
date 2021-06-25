@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+/* eslint no-console: "off" */
+import React, { useCallback, useEffect, useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Link, match } from 'react-router-dom';
@@ -6,7 +7,9 @@ import { Link, match } from 'react-router-dom';
 import Button from '../../components/Form/Button';
 import Input from '../../components/Form/Input';
 import Message from '../../components/Message';
-import { RootState } from '../../redux/store';
+import { MessageSpeak } from '../../interfaces/Message';
+import { clearQueue, removeItem } from '../../redux/slices/audioQueue';
+import { RootState, useAppDispatch } from '../../redux/store';
 import { useSendMessageMutation } from '../../services/voiceFlow';
 
 interface FormInputs {
@@ -27,9 +30,46 @@ const Chat = ({
     clearErrors,
     formState: { errors },
   } = useForm<FormInputs>();
+  const currentPlaying = useRef<string>();
+  const audioObj = useRef<HTMLAudioElement>();
+  const dispatch = useAppDispatch();
   const user = useSelector(({ users }: RootState) => users.items[userID]);
   const messages = useSelector(({ messages }: RootState) => messages.items[userID] ?? []);
+  const audioQueue = useSelector(({ audioQueue }: RootState) => audioQueue.items);
   const [sendMessage] = useSendMessageMutation();
+
+  useEffect(() => {
+    if (audioQueue.length < 1) {
+      return undefined;
+    }
+
+    const [messageId] = audioQueue;
+
+    if (messageId === currentPlaying.current) {
+      return undefined;
+    }
+
+    const message = messages.find((message) => message.id === messageId) as MessageSpeak;
+    if (!message.audio) {
+      return undefined;
+    }
+
+    audioObj.current = new Audio(message.audio);
+    audioObj.current.addEventListener('ended', () => {
+      dispatch(removeItem());
+      currentPlaying.current = undefined;
+    });
+    audioObj.current.play();
+    currentPlaying.current = messageId;
+
+    return () => {
+      if (currentPlaying.current && audioObj.current) {
+        audioObj.current.pause();
+        currentPlaying.current = undefined;
+        dispatch(clearQueue());
+      }
+    };
+  }, [audioQueue, messages]);
 
   const onSubmit: SubmitHandler<FormInputs> = useCallback(
     ({ message }) => {

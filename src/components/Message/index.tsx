@@ -10,7 +10,7 @@ const Message = (props: MessageType & { userID: string }): React.ReactElement =>
     case 'choice':
       return <Choice {...(props as MessageChoice)} userID={props.userID} />;
     case 'speak':
-      return <Speak {...(props as MessageSpeak)} />;
+      return <Speak {...(props as MessageSpeak)} id={props.id} />;
     default:
       return <User {...(props as MessageUser)} />;
   }

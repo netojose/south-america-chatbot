@@ -5,16 +5,18 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import voiceFlow from '../services/voiceFlow';
+import audioQueue from './slices/audioQueue';
 import messages from './slices/messages';
 import users from './slices/users';
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: [voiceFlow.reducerPath],
+  blacklist: [voiceFlow.reducerPath, 'audioQueue'],
 };
 
 const rootReducer = combineReducers({
+  audioQueue,
   users,
   messages,
   [voiceFlow.reducerPath]: voiceFlow.reducer,
