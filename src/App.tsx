@@ -18,13 +18,15 @@ const App = (): React.ReactElement => (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Router>
-          <Suspense fallback={<PageLoader />}>
-            <Switch>
-              <Route path={DASHBOARD_ROUTE} component={Dashboard} />
-              <Route path={CHAT_ROUTE} component={Chat} />
-              <Redirect to={DASHBOARD_ROUTE} />
-            </Switch>
-          </Suspense>
+          <div className="container px-5 mx-auto">
+            <Suspense fallback={<PageLoader />}>
+              <Switch>
+                <Route path={DASHBOARD_ROUTE} component={Dashboard} />
+                <Route path={CHAT_ROUTE} component={Chat} />
+                <Redirect to={DASHBOARD_ROUTE} />
+              </Switch>
+            </Suspense>
+          </div>
         </Router>
       </PersistGate>
     </Provider>

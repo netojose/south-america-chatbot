@@ -18,6 +18,7 @@ const ModalAddUser = function ({ isOpen, onRequestClose }: { isOpen: boolean; on
     register,
     handleSubmit,
     setValue,
+    clearErrors,
     formState: { errors },
   } = useForm<FormInputs>();
   const idUsers = useSelector(({ users }: RootState) => Object.keys(users.items));
@@ -31,17 +32,23 @@ const ModalAddUser = function ({ isOpen, onRequestClose }: { isOpen: boolean; on
     [onRequestClose]
   );
 
+  const handleRequestClose = useCallback(() => {
+    setValue('name', '');
+    clearErrors();
+    onRequestClose();
+  }, []);
+
   const isValidId = useCallback((value) => !idUsers.includes(makeSlug(value || '')) || 'This name is not available', [idUsers]);
 
   return (
-    <Modal title="Add a new user" isOpen={isOpen} onRequestClose={onRequestClose}>
+    <Modal title="Add a new user" isOpen={isOpen} onRequestClose={handleRequestClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input<FormInputs>
           register={register('name', { required: 'The name is required', validate: isValidId })}
           label="Name"
           error={errors?.name?.message}
         />
-        <Button label="Add user" />
+        <Button label="Add user" variant="primary" />
       </form>
     </Modal>
   );

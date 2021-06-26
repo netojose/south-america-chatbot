@@ -1,5 +1,5 @@
 import React from 'react';
 
-const User = ({ text }: { text: string }): React.ReactElement => <li>{text}</li>;
+const User = ({ text }: { text: string }): React.ReactElement => <div>{text}</div>;
 
 export default User;

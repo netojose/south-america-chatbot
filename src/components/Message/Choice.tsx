@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '../../redux/store';
 import { useSendMessageMutation } from '../../services/voiceFlow';
+import Button from '../Form/Button';
 
 const Choice = ({ buttons, userID, id }: { buttons: string[]; userID: string; id: string }): React.ReactElement => {
   const [sendMessage] = useSendMessageMutation();
@@ -12,13 +13,11 @@ const Choice = ({ buttons, userID, id }: { buttons: string[]; userID: string; id
     sendMessage({ message, userID });
   };
   return (
-    <li>
+    <div>
       {buttons.map((text) => (
-        <button key={text} disabled={isDisabled} onClick={() => handleSendMessage(text)}>
-          {text}
-        </button>
+        <Button key={text} disabled={isDisabled} onClick={() => handleSendMessage(text)} label={text} />
       ))}
-    </li>
+    </div>
   );
 };
 

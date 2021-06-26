@@ -47,9 +47,16 @@ const Modal = function ({
   return createPortal(
     isOpen ? (
       <>
-        <div role="dialog">
-          <h3>{title}</h3>
-          {showCloseBtn && <button onClick={onRequestClose}>X</button>}
+        <div
+          role="dialog"
+          className="fixed z-50 shadow-inner max-w-md md:relative align-top m-auto justify-end md:justify-center p-6 bg-white md:rounded w-full md:h-auto md:shadow flex flex-col"
+        >
+          <h3 className="text-xl font-bold mb-2 text-center">{title}</h3>
+          {showCloseBtn && (
+            <button onClick={onRequestClose} className="absolute -top-3 -right-3 leading-none bg-royalblue-500 rounded-full	p-1 w-7 h-7 text-white">
+              X
+            </button>
+          )}
           {children}
         </div>
         <div
@@ -57,7 +64,7 @@ const Modal = function ({
           onClick={onRequestClose}
           onKeyDown={onRequestClose}
           tabIndex={-1}
-          style={{ width: 100, height: 100, backgroundColor: 'blue' }}
+          className="inset-0 cursor-auto opacity-40 fixed z-40 overflow-auto bg-black flex"
         />
       </>
     ) : null,

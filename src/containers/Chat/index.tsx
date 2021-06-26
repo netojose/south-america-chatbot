@@ -47,6 +47,7 @@ const Chat = ({
 
     chatWrapper.scrollTop = chatWrapper.scrollHeight;
     chatWrapper.animate({ scrollTop: chatWrapper.scrollHeight });
+    clearErrors();
   }, [messages]);
 
   useEffect(() => {
@@ -97,24 +98,35 @@ const Chat = ({
   return !user ? (
     <div>
       <PageTitle title="User not found" />
-      <p>User not found</p>
       <p>
         <Link to="/dashboard">Go to dashboard</Link>
       </p>
     </div>
   ) : (
-    <div>
-      <PageTitle title={`Chat with ${user.name}`} />
-      <h1>{user.name} Chat</h1>
+    <div className="flex flex-col h-screen">
+      <div className="flex items-center">
+        <Link to="/dashboard" className="text-royalblue-800 border border-royalblue-800 rounded-md px-2 hover:bg-royalblue-300 hover:text-white">
+          Back
+        </Link>
+        <div className="flex-1">
+          <PageTitle title={`Chat with ${user.name}`} />
+        </div>
+      </div>
 
-      <ul style={{ height: 350, overflowY: 'auto', scrollBehavior: 'smooth' }} ref={chatArea}>
+      <ul className="overflow-auto scroll-smooth flex-1" ref={chatArea}>
         {messages.map((message) => (
           <Message key={message.id} {...message} userID={userID} />
         ))}
       </ul>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input<FormInputs> label="Message" register={register('message', { required: 'The message is required' })} error={errors?.message?.message} />
+      <form onSubmit={handleSubmit(onSubmit)} className="flex bg-royalblue-200 items-center mb-3 pl-3 py-3 rounded-xl">
+        <div className="flex-1">
+          <Input<FormInputs>
+            register={register('message', { required: 'The message is required' })}
+            error={errors?.message?.message}
+            placeholder="Type your message here"
+          />
+        </div>
         <Button label="Send message" />
       </form>
     </div>

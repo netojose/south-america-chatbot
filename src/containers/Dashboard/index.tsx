@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Confirm from '../../components/Confirm';
+import Button from '../../components/Form/Button';
 import ModalAddUser from '../../components/ModalAddUser';
 import PageTitle from '../../components/PageTitle';
 import { remove } from '../../redux/slices/users';
@@ -36,22 +37,22 @@ const Dashboard = function (): React.ReactElement {
   return (
     <div>
       <PageTitle title="Chat users list" />
-      <h1>Chat users list</h1>
-
       {usersIdsList.length < 1 ? (
         <p>No users added</p>
       ) : (
         <ul>
           {usersIdsList.map((id) => (
-            <li key={id}>
-              <Link to={`/chat/${id}`}>{users[id].name}</Link>
-              <input type="button" value="Delete" onClick={() => askForDeleteUser(id)} />
+            <li key={id} className="flex justify-start text-royalblue-300 hover:text-white hover:bg-royalblue-500 rounded-md px-2 py-2 my-2">
+              <Link to={`/chat/${id}`} className="flex-grow font-medium px-2 flex items-center">
+                {users[id].name}
+              </Link>
+              <Button type="button" label="Delete" variant="danger" onClick={() => askForDeleteUser(id)} />
             </li>
           ))}
         </ul>
       )}
 
-      <input type="button" value="Create New User" onClick={openModalAddUser} />
+      <Button type="button" label="Create new user" onClick={openModalAddUser} />
       <ModalAddUser isOpen={showModal} onRequestClose={closeModalAddUser} />
       <Confirm
         isOpen={!!deleteId}

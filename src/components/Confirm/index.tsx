@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from '../Form/Button';
 import Modal from '../Modal';
 
 const Confirm = ({
@@ -18,8 +19,8 @@ const Confirm = ({
   <Modal isOpen={isOpen} title={title} showCloseBtn={false} closeOnEsc={false}>
     <p>{text}</p>
     <div>
-      <input type="button" value="Ok" onClick={onRequestConfirm} />
-      <input type="button" value="Cancel" onClick={onRequestCancel} />
+      <Button type="button" label="Ok" onClick={onRequestConfirm} />
+      <Button type="button" label="Cancel" variant="danger" onClick={onRequestCancel} />
     </div>
   </Modal>
 );
