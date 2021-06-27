@@ -18,7 +18,7 @@ const Speak = ({ text, audio, id }: { text: string; audio: string | null; id: st
   return (
     <div className={classNames('flex items-center justify-between w-full rounded-xl pl-2', { 'bg-royalblue-500 text-white': isPlaying })}>
       <span>{text}</span>
-      {audio && <Button onClick={handleRequestPlay} disabled={isPlaying} label="Play" type="button" />}
+      {audio && <Button onClick={handleRequestPlay} disabled={isPlaying} label={isPlaying ? 'Playing' : 'Play'} type="button" />}
     </div>
   );
 };

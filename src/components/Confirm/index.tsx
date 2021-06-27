@@ -17,7 +17,7 @@ const Confirm = ({
   onRequestCancel: () => void;
 }): React.ReactElement => (
   <Modal isOpen={isOpen} title={title} showCloseBtn={false} closeOnEsc={false}>
-    <p>{text}</p>
+    <p data-testid="confirm-text">{text}</p>
     <div>
       <Button type="button" label="Ok" onClick={onRequestConfirm} />
       <Button type="button" label="Cancel" variant="danger" onClick={onRequestCancel} />

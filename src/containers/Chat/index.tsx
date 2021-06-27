@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Link, match } from 'react-router-dom';
 
+import Alert from '../../components/Alert';
 import Button from '../../components/Form/Button';
 import Input from '../../components/Form/Input';
 import Message from '../../components/Message';
@@ -37,7 +38,7 @@ const Chat = ({
   const user = useSelector(({ users: { items } }: RootState) => items[userID]);
   const messages = useSelector(({ messages: { items } }: RootState) => items[userID] ?? []);
   const audioQueue = useSelector(({ audioQueue: { items } }: RootState) => items);
-  const [sendMessage] = useSendMessageMutation();
+  const [sendMessage, { error }] = useSendMessageMutation();
 
   useEffect(() => {
     const { current: chatWrapper } = chatArea;
@@ -118,6 +119,8 @@ const Chat = ({
           <Message key={message.id} {...message} userID={userID} />
         ))}
       </ul>
+
+      <Alert show={!!error || true} message="An error occurred on this request. Please try again later" type="error" />
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex bg-royalblue-200 items-center mb-3 pl-3 py-3 rounded-xl">
         <div className="flex-1">

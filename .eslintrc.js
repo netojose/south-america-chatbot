@@ -19,10 +19,18 @@ module.exports = {
       },
     },
     {
-      files: ['./craco.config.js', './postcss.config.js'],
+      files: ['./craco.config.js', './postcss.config.js', 'setupTests.js'],
       rules: {
         'import/no-extraneous-dependencies': 'off',
         'global-require': 'off',
+      },
+    },
+    {
+      files: ['**.test.tsx'],
+      rules: {
+        'import/no-extraneous-dependencies': 'off',
+        'global-require': 'off',
+        'react/react-in-jsx-scope': 'off',
       },
     },
   ],

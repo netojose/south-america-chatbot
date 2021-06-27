@@ -50,14 +50,21 @@ const Modal = function ({
         <div
           role="dialog"
           className="fixed z-50 shadow-inner max-w-md md:relative align-top m-auto justify-end md:justify-center p-6 bg-white md:rounded w-full md:h-auto md:shadow flex flex-col"
+          data-testid="modal-wrapper"
         >
-          <h3 className="text-xl font-bold mb-2 text-center">{title}</h3>
+          <h3 className="text-xl font-bold mb-2 text-center" data-testid="modal-title">
+            {title}
+          </h3>
           {showCloseBtn && (
-            <button onClick={onRequestClose} className="absolute -top-3 -right-3 leading-none bg-royalblue-500 rounded-full	p-1 w-7 h-7 text-white">
+            <button
+              onClick={onRequestClose}
+              className="absolute -top-3 -right-3 leading-none bg-royalblue-500 rounded-full	p-1 w-7 h-7 text-white"
+              data-testid="modal-close-btn"
+            >
               X
             </button>
           )}
-          {children}
+          <div data-testid="modal-content">{children}</div>
         </div>
         <div
           role="button"
@@ -65,6 +72,7 @@ const Modal = function ({
           onKeyDown={onRequestClose}
           tabIndex={-1}
           className="inset-0 cursor-auto opacity-40 fixed z-40 overflow-auto bg-black flex"
+          data-testid="modal-overlay"
         />
       </>
     ) : null,

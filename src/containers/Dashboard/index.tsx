@@ -38,7 +38,9 @@ const Dashboard = function (): React.ReactElement {
     <div>
       <PageTitle title="Chat users list" />
       {usersIdsList.length < 1 ? (
-        <p>No users added</p>
+        <h2 className="text-center text-xl">
+          No users added, click on <span className="italic">Create new user</span> button to add an user.
+        </h2>
       ) : (
         <ul>
           {usersIdsList.map((id) => (

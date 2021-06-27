@@ -13,7 +13,7 @@ const Choice = ({ buttons, userID, id }: { buttons: string[]; userID: string; id
     sendMessage({ message, userID });
   };
   return (
-    <div>
+    <div data-testid="choice-wrapper">
       {buttons.map((text) => (
         <Button key={text} disabled={isDisabled} onClick={() => handleSendMessage(text)} label={text} />
       ))}

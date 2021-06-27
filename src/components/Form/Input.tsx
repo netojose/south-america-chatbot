@@ -17,7 +17,11 @@ function Input<FormInputs>({
   const id = useRef<string>(nanoid());
   return (
     <label htmlFor={id.current}>
-      {label && <span className="block text-gray-700 text-sm font-bold mb-2">{label}</span>}
+      {label && (
+        <span className="block text-gray-700 text-sm font-bold mb-2" data-testid="input-label">
+          {label}
+        </span>
+      )}
       <input
         type="text"
         id={id.current}
@@ -28,7 +32,11 @@ function Input<FormInputs>({
           { 'border-danger': !!error }
         )}
       />
-      {error && <span className="block text-danger text-xs pb-1">{error}</span>}
+      {error && (
+        <span className="block text-danger text-xs pb-1" data-testid="input-error">
+          {error}
+        </span>
+      )}
     </label>
   );
 }
