@@ -120,7 +120,7 @@ const Chat = ({
         ))}
       </ul>
 
-      <Alert show={!!error || true} message="An error occurred on this request. Please try again later" type="error" />
+      <Alert show={!!error} message="An error occurred on this request. Please try again later" type="error" />
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex bg-royalblue-200 items-center mb-3 pl-3 py-3 rounded-xl">
         <div className="flex-1">
