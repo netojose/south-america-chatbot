@@ -52,7 +52,7 @@ For change app state, I use immutable operations (to not to mutate the state, an
 
 # To do
 
-- Improve the modal (add autofocus on the first modal element and avoid focus on elements behind of modal) or use a third-party modal (I already have a modal component [published on npm](https://www.npmjs.com/package/@netojose/react-modal)). For this test, I have chosen to create a modal, just to explore more React features (like portal), and the communication between some components.
+- Improve the modal (add autofocus on the first modal element and avoid focus on elements behind of modal) or use a third-party modal (I already have a modal component [published on npm](https://www.npmjs.com/package/@netojose/react-modal)). For this test, I have chosen to create a modal, just to explore more React features (like portal), and the communication between some components, giving more code to be analized.
 - Write intgration tests for testing all process (I like to use [Cypress](https://www.cypress.io/)).
 - On unit tests, test components that haven't been tested yet.
 - Write stores on Storybook.
