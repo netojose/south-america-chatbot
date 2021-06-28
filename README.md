@@ -46,7 +46,9 @@ The **build** command generate production files under `build` sirectory
 
 ## About the project
 
-This was my second contact with [Tailwind CSS](https://tailwindcss.com), and I liked of the result. I decided to learn something new while creating this challenge, instead of use tools I already familiar with. Normally for this case, I use some CSS in JS approach for styling. The application is responsive, of course. Another new tool I tested, was [Redux Toolkit](https://redux-toolkit.js.org), the official, opinionated, batteries-included toolset for efficient Redux development, created by Redux Team. Tor change app state, normally I use immutable operations, but this toolkit uses [Immer](https://github.com/immerjs/immer), and this works in a different approach, I need to make operations causing mutations, but this is not in a Redux state, is just a draft. And this package do the rest. I'm saying this, because if you see my code mutatin some objects, knows this is correct and expected by Redux Toolkit.
+This was my second contact with [Tailwind CSS](https://tailwindcss.com), and I liked of the result. I decided to learn something new while creating this challenge, instead of use tools I already familiar with. Normally for this case, I use some CSS in JS approach for styling. The application is responsive, of course. Another new tool I tested, was [Redux Toolkit](https://redux-toolkit.js.org), the official, opinionated, batteries-included toolset for efficient Redux development, created by Redux Team.
+
+For change app state, I use immutable operations (to not to mutate the state, and because it is one of the principles of Redux), but Redux Toolkit uses [Immer](https://github.com/immerjs/immer), and this package works in a different approach, I need to make operations causing mutations, but this is not in a Redux state, is just a draft, and this package uses my draft to create a new state, using the [copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write) mechanism. I'm saying this, because if you see my code mutatin some objects, knows this is correct and expected by Redux Toolkit.
 
 ## Pending work
 
