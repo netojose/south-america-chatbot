@@ -9,3 +9,6 @@ yarn-error.log
 
 # code coverage tests output
 coverage
+
+# dotenv environment variables file
+.env
